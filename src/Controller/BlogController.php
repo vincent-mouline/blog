@@ -51,7 +51,7 @@ class BlogController extends AbstractController
      *     name="blog_show")
      *  @return Response A response instance
      */
-    public function show(?string $slug) : Response
+    public function show(?string $slug): Response
     {
         if (!$slug) {
             throw $this
@@ -66,6 +66,7 @@ class BlogController extends AbstractController
         $article = $this->getDoctrine()
             ->getRepository(Article::class)
             ->findOneBy(['title' => mb_strtolower($slug)]);
+        $category = $article->getCategory();
 
         if (!$article) {
             throw $this->createNotFoundException(
@@ -78,6 +79,7 @@ class BlogController extends AbstractController
             [
                 'article' => $article,
                 'slug' => $slug,
+                'category' => $category,
             ]
         );
     }
@@ -93,10 +95,12 @@ class BlogController extends AbstractController
         $category = $this->getDoctrine()
             ->getRepository(Category::class)
             ->findOneBy(['name' => mb_strtolower($category)]);
+        $articles = $category->getArticles();
+//
+//        $articles = $this->getDoctrine()
+//            ->getRepository(Article::class)
+//            ->findBy(['category' => $category], ['id' => 'DESC'], 3);
 
-        $articles = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findBy(['category' => $category], ['id' => 'DESC'], 3);
 
         return $this->render('blog/category.html.twig', [
             'articles' => $articles
