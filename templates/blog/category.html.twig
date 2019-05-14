@@ -8,8 +8,8 @@
 {% block body %}
 {% for article in articles %}
     <div>
-        <h1>Real article s title : {{ article.title }}</h1>
-        <h2>Category : {{ article.category.name }}</h2>
+        <h1>{{ article.id }}</h1>
+        <h2>Real article s title : {{ article.title }}</h2>
         <p>{{ article.content }}</p>
     </div>
 {% endfor %}
