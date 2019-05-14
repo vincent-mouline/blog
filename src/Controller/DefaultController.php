@@ -8,7 +8,7 @@ use Symfony\Flex\Response;
 class DefaultController extends AbstractController
 {
     /**
-     * @Route("/", name="default_index")
+     * @Route("/", name="app_index")
      */
     public function index()
     {
