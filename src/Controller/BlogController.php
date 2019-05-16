@@ -86,17 +86,18 @@ class BlogController extends AbstractController
 
     /**
      *
-     * @Route("/blog/category/{category}", name="show_category")
-     * @param string $category
+     * @Route("/blog/category/{name}", name="show_category")
+     * @param category $category
      * @return Response
      */
-    public function showByCategory(string $category)
+    public function showByCategory(Category $category)
     {
-        $category = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->findOneBy(['name' => mb_strtolower($category)]);
+//        $category = $this->getDoctrine()
+//            ->getRepository(Category::class)
+//            ->findOneBy(['name' => mb_strtolower($category)]);
         $articles = $category->getArticles();
 //
+
 //        $articles = $this->getDoctrine()
 //            ->getRepository(Article::class)
 //            ->findBy(['category' => $category], ['id' => 'DESC'], 3);
