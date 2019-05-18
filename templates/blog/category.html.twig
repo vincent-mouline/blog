@@ -1,20 +1,25 @@
 {# templates/blog/show.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Add an article{% endblock %}
 
 {% block stylesheets %}{% endblock %}
 
 {% block body %}
-{% for article in articles %}
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_end(form) }}
+
     <div>
-        <h1>{{ article.id }}</h1>
-        <h2>Real article s title : {{ article.title }}</h2>
-        <p>{{ article.content }}</p>
+        {% for category in categories %}
+        <h2>{{ category.name }}</h2>
+        {% endfor %}
     </div>
-{% endfor %}
-    <a href="{{ path('app_index') }}">
-        Back to homepage.
-    </a>
+    <div>
+        <a href="{{ path('app_index') }}">
+            Back to homepage.
+        </a>
+    </div>
 
 {% endblock %}

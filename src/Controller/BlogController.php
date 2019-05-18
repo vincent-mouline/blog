@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 
+use App\Form\CategoryType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,7 +51,7 @@ class BlogController extends AbstractController
      * @Route("/blog/{slug<^[a-z0-9-]+$>}",
      *     defaults={"slug" = null},
      *     name="blog_show")
-     *  @return Response A response instance
+     * @return Response A response instance
      */
     public function show(?string $slug): Response
     {
@@ -70,7 +72,7 @@ class BlogController extends AbstractController
 
         if (!$article) {
             throw $this->createNotFoundException(
-                'No article with '.$slug.' title, found in article\'s table.'
+                'No article with ' . $slug . ' title, found in article\'s table.'
             );
         }
 
@@ -104,8 +106,43 @@ class BlogController extends AbstractController
 
 
         return $this->render('blog/category.html.twig', [
-            'articles' => $articles
-        ]
+                'articles' => $articles
+            ]
+        );
+    }
+
+    /**
+     * Add category by form
+     *
+     * @Route("/category", name="category")
+     * @param Request $request
+     * @return Response A response instance
+     */
+    public function addCategory(Request $request): Response
+    {
+        $category = new Category;
+        $categories = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->findAll();
+
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $categoryFormData = $form->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($categoryFormData);
+            $entityManager->flush();
+            return $this->redirectToRoute('category');
+
+
+        }
+
+        return $this->render(
+            'blog/category.html.twig', [
+                'form' => $form->createView(),
+                'categories' => $categories,
+            ]
         );
     }
 
