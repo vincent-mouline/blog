@@ -10,6 +10,15 @@
         <p>{{ article.content }}</p>
         <a href="{{ path('app_index') }}">
         </a>
+        <ul>
+            {% for tag in article.tags %}
+                <li>
+                    <a href="{{ path('tag_show', {'name': tag.name}) }}">{{ tag.name }}</a>
+                </li>
+            {% else %}
+                <li>No tags for this article</li>
+            {% endfor %}
+        </ul>
     </div>
 
     <a href="{{ path('app_index') }}">
