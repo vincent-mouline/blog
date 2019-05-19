@@ -7,20 +7,32 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ article.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ article.content }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ article.id }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ article.title }}</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>{{ article.content }}</td>
+        </tr>
         </tbody>
     </table>
+
+    <strong>Tags :</strong>
+    <ul>
+        {% for tag in article.tags %}
+        <li>{% for tag in article.tags %}
+            <a href="{{ path('tag_show', {'name': tag.name}) }}">{{ tag.name }}</a>
+            {% endfor %}
+        </li>
+    {% else %}
+        <li>No tags for this article</li>
+        {% endfor %}
+    </ul>
 
     <a href="{{ path('article_index') }}">back to list</a>
 

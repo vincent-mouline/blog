@@ -13,7 +13,7 @@ use App\Entity\Category;
 
 /**
  * Class BlogController
- *
+ * @Route("/blog")
  * @package App\Controller
  */
 class BlogController extends AbstractController
@@ -22,7 +22,7 @@ class BlogController extends AbstractController
     /**
      * Show all row from article's entity
      *
-     * @Route("/blog", name="blog_index")
+     * @Route("/", name="blog_index")
      * @return Response A response instance
      */
     public function index(): Response
@@ -48,7 +48,7 @@ class BlogController extends AbstractController
      *
      * @param string $slug The slugger
      *
-     * @Route("/blog/{slug<^[a-z0-9-]+$>}",
+     * @Route("/{slug<^[a-z0-9-]+$>}",
      *     defaults={"slug" = null},
      *     name="blog_show")
      * @return Response A response instance
@@ -69,6 +69,7 @@ class BlogController extends AbstractController
             ->getRepository(Article::class)
             ->findOneBy(['title' => mb_strtolower($slug)]);
         $category = $article->getCategory();
+        $tag = $article->getTags();
 
         if (!$article) {
             throw $this->createNotFoundException(
@@ -82,13 +83,14 @@ class BlogController extends AbstractController
                 'article' => $article,
                 'slug' => $slug,
                 'category' => $category,
+                'tag' => $tag
             ]
         );
     }
 
     /**
      *
-     * @Route("/blog/category/{name}", name="show_category")
+     * @Route("/category/{name}", name="show_category")
      * @param category $category
      * @return Response
      */
@@ -111,39 +113,5 @@ class BlogController extends AbstractController
         );
     }
 
-    /**
-     * Add category by form
-     *
-     * @Route("/category", name="category")
-     * @param Request $request
-     * @return Response A response instance
-     */
-    public function addCategory(Request $request): Response
-    {
-        $category = new Category;
-        $categories = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->findAll();
-
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $categoryFormData = $form->getData();
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($categoryFormData);
-            $entityManager->flush();
-            return $this->redirectToRoute('category');
-
-
-        }
-
-        return $this->render(
-            'blog/category.html.twig', [
-                'form' => $form->createView(),
-                'categories' => $categories,
-            ]
-        );
-    }
 
 }

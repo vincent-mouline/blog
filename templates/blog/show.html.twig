@@ -5,9 +5,11 @@
 
 {% block body %}
     <div>
-        <h1>Real article s title : {{ article.title }}</h1>
-        <h2>Category : {{ category.name }}</h2>
+        <h1>{{ article.title }}</h1>
+        <h3>Category : {{ category.name }}</h3>
         <p>{{ article.content }}</p>
+        <a href="{{ path('app_index') }}">
+        </a>
     </div>
 
     <a href="{{ path('app_index') }}">

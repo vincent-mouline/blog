@@ -9,11 +9,15 @@
         Testing index() method from BlogController to view all articles.
     </a>
     <br>
-    <a href="{{ path('category') }}">
+    <a href="{{ path('category_index') }}">
         Testing addCategory() method from BlogController to add category.
     </a>
     <br>
     <a href="{{ path('article_index') }}">
         Testing Article CRUD from ArticleController to admin articles
+    </a>
+    <br>
+    <a href="{{ path('tag_show', {'name': "development" }) }}">
+        Testing tag with development tag
     </a>
 {% endblock %}

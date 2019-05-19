@@ -24,13 +24,18 @@
                     <a href="{{ path('blog_index') }}">
                         index() Method </a></li>
                 <li class="nav-item mx-2">
-                    <a href="{{ path('category') }}">
+                    <a href="{{ path('category_index') }}">
                         addCategory() method
                     </a>
                 </li>
                 <li class="nav-item mx-2">
                     <a href="{{ path('article_index') }}">
                         article CRUD
+                    </a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a href="{{ path('tag_show', {'name': "development" }) }}">
+                        development tag
                     </a>
                 </li>
 
