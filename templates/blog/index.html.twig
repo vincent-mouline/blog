@@ -1,17 +1,25 @@
 {# templates/blog/show.html.twig #}
-{% extends 'base.html.twig' %}
+{% extends 'visitorLayout.html.twig' %}
 
 {% block title %}Bienvenue sur le blog de Vincent{% endblock %}
 
 {% block body %}
-    <h1 class="text-center my-2">Tous nos articles : </h1>
-    {% for article in articles %}
-        <div>
-            <h2>{{ loop.index }} / {{ article.title }} - Category : {{ article.category.name }}</h2>
-            <p>{{ article.content }}</p>
-            <a href="{{ path('blog_show')}}{{ article.slug }}">Lire cet article</a>
-        </div>
-    {% else %}
-        Aucun article trouvé.
-    {% endfor %}
+    <h1 class="text-center my-4">Tous nos articles : </h1>
+    <div class="row justify-content-center">
+        {% for article in articles %}
+            <div class="col-md-8 my-2">
+                <div class="card text-center">
+                    <div class="card-header">
+                        {{ article.title }}
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ article.content }}</p>
+                        <a class="btn btn-primary" href="{{ path('blog_show') }}{{ article.slug }}">Lire cet article</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            Aucun article trouvé.
+        {% endfor %}
+    </div>
 {% endblock %}

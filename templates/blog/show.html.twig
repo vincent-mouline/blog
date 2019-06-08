@@ -1,26 +1,25 @@
 {# templates/blog/show.html.twig #}
-{% extends 'base.html.twig' %}
+{% extends 'visitorLayout.html.twig' %}
 {% block title %}{{ slug }}{% endblock %}
 
 
 {% block body %}
     <div>
         <h1 class="text-center">{{ article.title }}</h1>
-        <h2 class="text-right category-title">Category : {{ category.name }}</h2>
-        <h3 class="text-center">{{ article.content }}</h3>
+        <p class="text-center">{{ article.content }}</p>
         <ul>
+            <li>Tag associé : </li>
             {% for tag in article.tags %}
-                <li>
-                    <a href="{{ path('tag_show', {'name': tag.name}) }}">{{ tag.name }}</a>
-                </li>
+                    <a href="{{ path('tag_show', {'name': tag.name}) }}">{{ tag.name }}, </a>
             {% else %}
-                <li>No tags for this article</li>
+                <li>Cet article n'est lié à aucun tag.</li>
             {% endfor %}
+                <li>Retrouvez d'autres articles de cette catégorie : </li>
+                <a href="{{ path('show_category', {'name': article.category.name}) }}">{{ category.name }}</a>
+            </li>
         </ul>
     </div>
-
-    <a href="{{ path('blog_index') }}">
-        Retour à l'accueil.
-    </a>
-
+    <div class="text-center">
+    <a href="{{ path('blog_index') }}">Retour à l'accueil</a>
+    </div>
 {% endblock %}

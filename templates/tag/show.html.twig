@@ -3,17 +3,17 @@
 {% block title %}Tag{% endblock %}
 
 {% block body %}
-    <h1>{{ tag.name }} :</h1>
+    <h1 class="text-center my-2">Listes des articles comportant le tag {{ tag.name }} :</h1>
 
     <ul class="list-group">
     {% for article in tag.articles %}
     <li class="list-group-item list-group-item-dark">
-        <a href="{{ path('article_show', {'id': article.id })}}">{{ article.title }}</a>
+        <a href="{{ path('blog_show', {'slug': article.slug}) }}">{{ article.title }}</a>
     </li>
     {% endfor %}
 
-    <a href="{{ path('app_index') }}">
-        Back to homepage.
+    <a href="{{ path('tag_index') }}" class="text-center my-2">
+        Retour à la liste
     </a>
 
 {% endblock %}

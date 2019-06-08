@@ -1,24 +1,22 @@
 {# templates/blog/show.html.twig #}
-{% extends 'base.html.twig' %}
+{% extends 'visitorLayout.html.twig' %}
 
-{% block title %}Add an article{% endblock %}
-
+{% block title %}{{ category.name }}{% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_row(form.name) }}
-    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
-    {{ form_end(form) }}
-
     <div>
-        {% for category in categories %}
-        <h2>{{ category.name }}</h2>
-        {% endfor %}
+        <h2 class="text-center my-3">Articles de la catégorie {{ category.name }}</h2>
+        <ul class="list-group text-center">
+            {% for article in articles %}
+                <li class="list-group-item list-group-item-dark">
+                    <a href="{{ path('blog_show', {'slug': article.slug}) }}">{{ article.title }}</a>
+                </li>
+            {% else %}
+                <li>Cet article n'est lié à aucun tag.</li>
+            {% endfor %}
+        </ul>
     </div>
-    <div>
-        <a href="{{ path('app_index') }}">
-            Back to homepage.
-        </a>
+    <div class="text-center my-2">
+    <a href="{{ path('blog_index') }}">Retour à l'accueil</a>
     </div>
-
 {% endblock %}
