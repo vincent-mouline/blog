@@ -1,7 +1,7 @@
 var Encore = require('@symfony/webpack-encore');
 
 Encore
-    // directory where compiled assets will be stored
+// directory where compiled assets will be stored
     .setOutputPath('public/build/')
     // public path used by the web server to access the output path
     .setPublicPath('/build')
@@ -42,7 +42,8 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // enables @babel/preset-env polyfills
-    .configureBabel(() => {}, {
+    .configureBabel(() => {
+    }, {
         useBuiltIns: 'usage',
         corejs: 3
     })
@@ -60,9 +61,12 @@ Encore
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
 
-    // uncomment if you use API Platform Admin (composer req api-admin)
+    // uncomment if you use API Platform User (composer req api-admin)
     //.enableReactPreset()
     //.addEntry('admin', './assets/js/admin.js')
-;
 
+    .copyFiles({
+        from: './assets/images'
+    })
+;
 module.exports = Encore.getWebpackConfig();
