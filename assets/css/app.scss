@@ -3,3 +3,15 @@
 body {
     background-color: #cccccc;
 }
+
+.logo {
+    width: 50px;
+    height: auto;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+}
+
+.category-title {
+    font-size: 20px;
+}

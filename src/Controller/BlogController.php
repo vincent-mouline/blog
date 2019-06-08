@@ -11,11 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Article;
 use App\Entity\Category;
 
-/**
- * Class BlogController
- * @Route("/blog")
- * @package App\Controller
- */
+
 class BlogController extends AbstractController
 {
 

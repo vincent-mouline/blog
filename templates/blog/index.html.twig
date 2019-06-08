@@ -1,19 +1,17 @@
 {# templates/blog/show.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}All articles{% endblock %}
+{% block title %}Bienvenue sur le blog de Vincent{% endblock %}
 
 {% block body %}
-    <h1>All articles from article s table : </h1>
+    <h1 class="text-center my-2">Tous nos articles : </h1>
     {% for article in articles %}
         <div>
             <h2>{{ loop.index }} / {{ article.title }} - Category : {{ article.category.name }}</h2>
             <p>{{ article.content }}</p>
+            <a href="{{ path('blog_show')}}{{ article.slug }}">Lire cet article</a>
         </div>
     {% else %}
         Aucun article trouvé.
     {% endfor %}
-    <a href="{{ path('app_index') }}">
-        Back to homepage.
-    </a>
 {% endblock %}

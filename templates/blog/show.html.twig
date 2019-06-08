@@ -5,11 +5,9 @@
 
 {% block body %}
     <div>
-        <h1>{{ article.title }}</h1>
-        <h3>Category : {{ category.name }}</h3>
-        <p>{{ article.content }}</p>
-        <a href="{{ path('app_index') }}">
-        </a>
+        <h1 class="text-center">{{ article.title }}</h1>
+        <h2 class="text-right category-title">Category : {{ category.name }}</h2>
+        <h3 class="text-center">{{ article.content }}</h3>
         <ul>
             {% for tag in article.tags %}
                 <li>
@@ -21,8 +19,8 @@
         </ul>
     </div>
 
-    <a href="{{ path('app_index') }}">
-        Back to homepage.
+    <a href="{{ path('blog_index') }}">
+        Retour à l'accueil.
     </a>
 
 {% endblock %}
