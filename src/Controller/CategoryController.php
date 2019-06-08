@@ -11,12 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/category")
+ * @Route("/admin/category")
  */
 class CategoryController extends AbstractController
 {
     /**
      * @Route("/", name="category_index", methods={"GET"})
+     * @param CategoryRepository $categoryRepository
+     * @return Response
      */
     public function index(CategoryRepository $categoryRepository): Response
     {

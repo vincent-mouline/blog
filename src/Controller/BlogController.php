@@ -92,19 +92,12 @@ class BlogController extends AbstractController
      */
     public function showByCategory(Category $category)
     {
-//        $category = $this->getDoctrine()
-//            ->getRepository(Category::class)
-//            ->findOneBy(['name' => mb_strtolower($category)]);
+
         $articles = $category->getArticles();
-//
-
-//        $articles = $this->getDoctrine()
-//            ->getRepository(Article::class)
-//            ->findBy(['category' => $category], ['id' => 'DESC'], 3);
-
 
         return $this->render('blog/category.html.twig', [
-                'articles' => $articles
+                'articles' => $articles,
+                'category' => $category,
             ]
         );
     }
