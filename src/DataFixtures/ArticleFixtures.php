@@ -32,11 +32,12 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $article = new Article();
             $article->setTitle(mb_strtolower($faker->word() . ' ' . $faker->word()));
-            $article->setContent(mb_strtolower($faker->sentence()));
+            $article->setContent(mb_strtolower($faker->text()));
             $article->setCategory($this->getReference('categorie_' . $faker->biasedNumberBetween($min = 0, $max = 4)));
+            $article->addTag($this->getReference('tag_' . $faker->biasedNumberBetween($min = 0, $max = 4)));
             $article->setSlug($this->slug->generate($article->getTitle()));
             $manager->persist($article);
         }
