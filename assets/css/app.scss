@@ -5,7 +5,7 @@ body {
 }
 
 .logo {
-    width: 50px;
+    width: 40px;
     height: auto;
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
@@ -14,4 +14,21 @@ body {
 
 .category-title {
     font-size: 20px;
+}
+
+.user-log {
+    font-size: 15px;
+    color: white;
+    &:hover {
+        color: #17a2b8;
+    }
+}
+
+.user-name {
+    font-size: 15px;
+    color: white;
+}
+
+.navbar {
+    height: 60px;
 }

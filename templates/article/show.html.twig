@@ -23,6 +23,12 @@
         <th>Slug</th>
         <td>{{ article.slug }}</td>
     </tr>
+    {% if article.author %}
+    <tr>
+        <th>Author</th>
+        <td>{{ article.author.username }}</td>
+    </tr>
+    {% endif %}
     </tbody>
 </table>
 

@@ -17,6 +17,12 @@
                 <li>Retrouvez d'autres articles de cette catégorie : </li>
                 <a href="{{ path('show_category', {'name': article.category.name}) }}">{{ category.name }}</a>
             </li>
+            {% if article.author %}
+                <li>
+                    <th>Auteur :</th>
+                    <span>{{ article.author.username }}</span>
+                </li>
+            {% endif %}
         </ul>
     </div>
     <div class="text-center">
