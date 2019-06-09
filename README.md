@@ -1,24 +1,15 @@
 # blog
 Symfony Quests
 
-# 15 - Symfony : Introduction aux “Services”
- 
+# 18  Validation d’un article
 
-Appeler la génération de Slug
-Dans ce challenge, tu dois compléter l'algo de la méthode generate() pour que tous les caractères spéciaux soient traités :
+Dans la quête, tu as vu des exemples pour configurer une validation sur les catégories. Maintenant, il faut que tu prennes le réflexe d’ajouter systématiquement des contraintes de validation sur tous les champs de toutes tes entités qui en ont besoin. Dans le cadre du challenge, tu vas configurer ton entité Article afin qu’elle suive ces règles simples de validation :
 
-à, ç, etc. deviennent a, c, etc.;
-!, apostrophes et autres ponctuations sont supprimées;
-les espaces en début et fin de chaînes sont supprimés;
-il n'y a pas plusieurs - successifs;
-....
-Une fois que l'algo de ton service est complet, fais en sorte que celui-ci soit utilisé à toutes les étapes de création et d'édition d'un article :
+Pour tester les cas d’erreur côté serveur, il faut enlever les attributs bloquants dans le HTML du formulaire (les maxLength et autre required) afin de “forcer” l’erreur. Utilise la console du navigateur pour faire cela ;-)
 
-Lors de l'ajout d'un article depuis un formulaire,
-Lors de l'ajout d'un article depuis les fixtures,
-Lors de l'édition d'un article.
-Critères de validation
-Le service est appelé à chaque niveau de l’application où il y a un ajout/modification d'article.
-Le service Slugify créé auparavant avec une méthode generate(), permet de générer un slug à partir d'une chaîne de caractères.
-L'ajout de l'article : "PHPStorm, l'éditeur de code pour PHP à tester !" donne le slug "phpstorm-lediteur-de-code-pour-php-a-tester".
-Le changement du titre de l'article précédent en "PHPStorm, l'éditeur de code pour PHP idéal !" donne "phpstorm-lediteur-de-code-pour-php-ideal".
+Une erreur appropriée apparaît au niveau de ton formulaire si un titre vide ou un titre > 255 caractères est envoyé au serveur.
+
+Le message “ce titre existe déjà” doit apparaître dans ton formulaire, si le titre saisi existe déjà pour un autre article
+Une erreur appropriée apparaît au niveau de ton formulaire si un contenu d’article vide est envoyé au serveur.
+
+Si le content de l’article contient le mot “digital”, le message d’erreur “en français, il faut dire numérique” apparaît à la place.
