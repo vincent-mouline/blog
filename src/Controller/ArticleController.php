@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use App\Service\AuthorControl;
 use App\Service\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +18,18 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ArticleController extends AbstractController
 {
+
+    private $authorControl;
+
+    /**
+     * ArticleController constructor.
+     * @param AuthorControl $authorControl
+     */
+    public function __construct(AuthorControl $authorControl)
+    {
+        $this->authorControl = $authorControl;
+    }
+
     /**
      * @Route("/", name="article_index", methods={"GET"})
      * @param ArticleRepository $articleRepository
@@ -59,7 +73,7 @@ class ArticleController extends AbstractController
                     $this->renderView(
                         'emails/news.html.twig',
                         ['article' => $article]),
-                        'text/html'
+                    'text/html'
                 );
 
             $mailer->send($message);
@@ -93,23 +107,28 @@ class ArticleController extends AbstractController
      */
     public function edit(Request $request, Article $article, Slugify $slugify): Response
     {
-        $form = $this->createForm(ArticleType::class, $article);
-        $form->handleRequest($request);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $article->setSlug($slugify->generate($article->getTitle()));
-            $this->getDoctrine()->getManager()->flush();
+        if ($this->authorControl->editControl($article)) {
 
-            return $this->redirectToRoute('article_index', [
-                'id' => $article->getId(),
+            $form = $this->createForm(ArticleType::class, $article);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $article->setSlug($slugify->generate($article->getTitle()));
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('article_index', [
+                    'id' => $article->getId(),
+                ]);
+            }
+            return $this->render('article/edit.html.twig', [
+                'article' => $article,
+                'form' => $form->createView(),
             ]);
+        } else {
+            return $this->redirectToRoute('blog_index');
         }
-
-        return $this->render('article/edit.html.twig', [
-            'article' => $article,
-            'form' => $form->createView(),
-        ]);
     }
+
 
     /**
      * @Route("/{id}", name="article_delete", methods={"DELETE"})
@@ -117,7 +136,8 @@ class ArticleController extends AbstractController
      * @param Article $article
      * @return Response
      */
-    public function delete(Request $request, Article $article): Response
+    public
+    function delete(Request $request, Article $article): Response
     {
         if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

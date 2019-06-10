@@ -24,6 +24,11 @@
                 </li>
             {% endif %}
         </ul>
+        {% if is_granted('ROLE_AUTHOR') %}
+        <li>
+        <a href="{{ path('article_edit', { 'id': article.id} ) }}">Éditer</a>
+        </li>
+        {%endif%}
     </div>
     <div class="text-center">
     <a href="{{ path('blog_index') }}">Retour à l'accueil</a>

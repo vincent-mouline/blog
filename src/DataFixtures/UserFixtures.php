@@ -26,7 +26,16 @@ class UserFixtures extends Fixture
             $author,
             'authorpassword'
         ));
+        $manager->persist($author);
 
+        $author = new User();
+        $author->setEmail('new_author@monsite.com');
+        $author->setRoles(['ROLE_AUTHOR']);
+        $author->setPassword($this->passwordEncoder->encodePassword(
+            $author,
+            'authorpassword'
+        ));
+        $this->addReference('author_user', $author);
         $manager->persist($author);
 
         $admin = new User();
