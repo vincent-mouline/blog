@@ -43,7 +43,10 @@ class CategoryController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
             $entityManager->flush();
-
+            $this->addFlash(
+                'success',
+                'Votre catégorie a été enregistrée !'
+            );
             return $this->redirectToRoute('category_index');
         }
 
@@ -73,7 +76,10 @@ class CategoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(
+                'success',
+                'Votre catégorie a été modifiée !'
+            );
             return $this->redirectToRoute('category_index', [
                 'id' => $category->getId(),
             ]);
@@ -94,6 +100,10 @@ class CategoryController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($category);
             $entityManager->flush();
+            $this->addFlash(
+                'warning',
+                'Votre catégorie a été supprimée !'
+            );
         }
 
         return $this->redirectToRoute('category_index');
